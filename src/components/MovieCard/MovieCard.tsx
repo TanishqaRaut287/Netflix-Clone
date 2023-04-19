@@ -1,9 +1,23 @@
-import React from 'react'
+import { Box, Typography } from "@mui/material";
+import items from "../CardsGrid/MovieCardsGrid";
 
-const MovieCard = () => {
-  return (
-    <div>MovieCard</div>
-  )
+type itemsType = {
+  items: string
 }
 
-export default MovieCard
+export default function MovieCard(items: itemsType) {
+  return (
+    <>
+      <Box>
+        <Box sx={{
+          color: "white",
+          marginTop: "2rem"
+        }}>
+          <img src={"items"}
+            alt="content"
+            style={{ borderRadius: '7px', height: "20vh" }} />
+        </Box>
+      </Box>
+    </>
+  );
+}

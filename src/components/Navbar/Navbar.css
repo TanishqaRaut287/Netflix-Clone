@@ -1,9 +1,24 @@
-.pinning-header{
+/* .pinning-header{
     height: 70px;
 }
 
 .menu-navigation{
     background-image: linear-gradient(180deg,rgba(0,0,0,.7) 40%,transparent);
-}::-webkit-scrollbar{
-    background-color: transparent;
+} */
+/* 
+.menu-navigation.scrolled{
+    background-color: black;
+} */
+
+.nav-profile{
+    height: 3rem;
+    width: 3rem;
+    background-image: url('http://occ-0-1007-1009.1.nflxso.net/dnm/api/v6/K6hjPJd6cR6FpVELC5Pd6ovHRSk/AAAABfNXUMVXGhnCZwPI1SghnGpmUgqS_J-owMff-jig42xPF7vozQS1ge5xTgPTzH7ttfNYQXnsYs4vrMBaadh4E6RTJMVepojWqOXx.png?r=1d4');
+    background-size:contain;
+    border: none;
+    border-radius: 4px;
+    box-sizing: border-box;
+    position: relative;
+    text-decoration: none;
+
 }

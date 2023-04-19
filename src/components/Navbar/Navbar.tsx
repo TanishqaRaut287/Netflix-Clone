@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useState, useEffect} from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -18,14 +18,18 @@ import ProfileCard from '../ProfileCard/ProfileCard';
 import { Paper } from '@mui/material';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { routes } from '../../utils/constants/routes';
+import SearchIcon from '@mui/icons-material/Search';
+import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 
 const pages = ['Home', 'Tv Shows', 'Movies', 'New & Popular', 'My List', 'Browse by Languages'];
 const settings = ['Manage Profiles', 'Transfer Profile', 'Account', 'Help Center', "Sign Out Of Netflix"];
 
 function ResponsiveAppBar() {
-    const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
-    const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+    const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
+    const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+    const [scrollPosition, setScrollPosition] = useState<number>(0);
 
+   
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
     };
@@ -41,12 +45,27 @@ function ResponsiveAppBar() {
         setAnchorElUser(null);
     };
 
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  const handleScroll = () => {
+    const position = window.pageYOffset;
+    setScrollPosition(position);
+  };
+
+  const navbarBackground = scrollPosition > 10 ? 'black' : 'transparent';
+
     return (
-        <AppBar position="sticky" sx={{ backgroundColor: "black" }}>
+        <AppBar position="fixed" sx={{backgroundColor: navbarBackground}}  >
             <Container maxWidth="xl" className='menu-navigation'>
                 <Toolbar disableGutters>
                     <a href={routes.home}>
-                        <img src={images.netflix} height="43px" width="149px" color="#e50914" />
+                        <img src={images.netflix} height="45px" width="149px" color="#e50914" />
                     </a>
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
 
@@ -91,31 +110,27 @@ function ResponsiveAppBar() {
                             <Button
                                 key={page}
                                 onClick={handleCloseNavMenu}
-                                sx={{ my: 2, color: 'white', display: 'block', fontWeight: "regular", fontSize: "12px" }}
+                                sx={{ my: 1, color: 'white', display: 'block', fontWeight: "regular", fontSize: "12px" }}
                             >
                                 {page}
                             </Button>
                         ))}
                     </Box>
 
+                    <Box sx={{ flexGrow: 0, marginLeft: "0.5rem"}}>
+                        <IconButton >
+                            <SearchIcon sx={{ color: "white" }} />
+                        </IconButton>
+                        <IconButton>
+                            <NotificationsNoneIcon sx={{ color: "white" }} />
+                        </IconButton>
+
+                    </Box>
+
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Paper elevation={2} sx={{
-                                    height: "3rem",
-                                    width: "3rem",
-                                    background: "linear-gradient(180deg, rgba(228, 216, 0, 1) 1%, rgba(240, 255, 126, 1) 100%)",
-                                    backgroundImage: "url(http://occ-0-1007-1009.1.nflxso.net/dnm/api/v6/K6hjPJd6cR6FpVELC5Pd6ovHRSk/AAAABfNXUMVXGhnCZwPI1SghnGpmUgqS_J-owMff-jig42xPF7vozQS1ge5xTgPTzH7ttfNYQXnsYs4vrMBaadh4E6RTJMVepojWqOXx.png?r=1d4)",
-                                    backgroundColor: '#333',
-                                    backgroundRepeat: 'no-repeat',
-                                    backgroundSize: 'convertCompilerOptionsFromJson',
-                                    border: 'none',
-                                    borderRadius: '4px',
-                                    boxSizing: 'border-box',
-                                    position: 'relative',
-                                    textDecoration: 'none',
-
-                                }} />
+                                <Paper elevation={2} className="nav-profile" />
                             </IconButton>
                         </Tooltip>
                         <Menu
